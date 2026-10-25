@@ -8,6 +8,7 @@ import base64
 import json
 import shutil
 import subprocess
+import tempfile
 import time
 from pathlib import Path
 
@@ -18,8 +19,25 @@ def run_step(binary, session, label, args, log, timeout=30):
     started = time.monotonic()
     event = {'step': label, 'at': time.strftime('%Y-%m-%dT%H:%M:%S%z')}
     try:
-        result = subprocess.run([binary, '--session', session, *args], capture_output=True,
-                                text=True, encoding='utf-8', errors='replace', timeout=timeout)
+        # agent-browser keeps a background process alive. On Windows, a child
+        # inheriting capture pipes can hold them open and make communicate()
+        # wait until the timeout even after the foreground command has exited.
+        with tempfile.TemporaryFile(mode='w+b') as stdout, tempfile.TemporaryFile(mode='w+b') as stderr:
+            completed = subprocess.run(
+                [binary, '--session', session, *args],
+                stdin=subprocess.DEVNULL,
+                stdout=stdout,
+                stderr=stderr,
+                timeout=timeout,
+            )
+            stdout.seek(0)
+            stderr.seek(0)
+            result = subprocess.CompletedProcess(
+                completed.args,
+                completed.returncode,
+                stdout.read().decode('utf-8', errors='replace'),
+                stderr.read().decode('utf-8', errors='replace'),
+            )
         event.update(status='ok' if result.returncode == 0 else 'failed', exit_code=result.returncode)
         return result
     except subprocess.TimeoutExpired:

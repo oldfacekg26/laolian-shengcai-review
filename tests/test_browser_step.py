@@ -30,6 +30,22 @@ class BrowserStepTests(unittest.TestCase):
             self.assertEqual(result.returncode, 3)
             self.assertEqual(json.loads(log.read_text())['status'], 'failed')
 
+    def test_uses_files_instead_of_pipes_and_preserves_output(self):
+        def fake_run(command, **kwargs):
+            self.assertNotIn('capture_output', kwargs)
+            self.assertEqual(kwargs['stdin'], subprocess.DEVNULL)
+            kwargs['stdout'].write('stdout text'.encode())
+            kwargs['stderr'].write('stderr text'.encode())
+            return subprocess.CompletedProcess(command, 0)
+
+        with tempfile.TemporaryDirectory() as d:
+            log = Path(d) / 'steps.jsonl'
+            with patch('browser_step.subprocess.run', side_effect=fake_run):
+                result = run_step('browser', 'test', 'read', [], log)
+            self.assertEqual(result.stdout, 'stdout text')
+            self.assertEqual(result.stderr, 'stderr text')
+            self.assertEqual(json.loads(log.read_text())['status'], 'ok')
+
 
 if __name__ == '__main__':
     unittest.main()

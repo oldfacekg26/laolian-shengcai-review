@@ -27,9 +27,12 @@ class PayloadTests(unittest.TestCase):
     def test_compile_uses_verified_urls_and_escapes_text(self):
         expected = payload.compile_payload(self.root, self.mapping, self.root / 'out')
         body = (self.root / 'out/body.html').read_text(encoding='utf-8')
+        paste = (self.root / 'out/paste.js').read_text(encoding='utf-8')
         self.assertTrue(body.startswith('<p><img'))
         self.assertIn('图&quot;', body)
         self.assertNotIn('<script>', body)
+        self.assertIn('.ql-editor[contenteditable=true]', paste)
+        self.assertIn('.tiptap.ProseMirror[contenteditable=true]', paste)
         self.assertEqual(expected['images'], [self.url])
 
     def test_missing_mapping_writes_nothing(self):

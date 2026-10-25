@@ -33,7 +33,7 @@ def compile_payload(packet, mapping, output):
     content = '\n'.join(parts)
     expected = {'fingerprint': manifest['fingerprint'], 'title': manifest['title'],
                 'tags': manifest['tags'], 'images': expected_images}
-    js = '(() => { const e=document.querySelector(".tiptap.ProseMirror"); if(!e) throw new Error("Supported editor not found"); const d=new DataTransfer(); d.setData("text/html",' + json.dumps(content, ensure_ascii=False) + '); e.dispatchEvent(new ClipboardEvent("paste",{clipboardData:d,bubbles:true,cancelable:true})); return "Paste dispatched; readback required"; })()'
+    js = '(() => { const e=document.querySelector(".ql-editor[contenteditable=true]") || document.querySelector(".tiptap.ProseMirror[contenteditable=true]"); if(!e) throw new Error("Supported editor not found"); const d=new DataTransfer(); d.setData("text/html",' + json.dumps(content, ensure_ascii=False) + '); e.dispatchEvent(new ClipboardEvent("paste",{clipboardData:d,bubbles:true,cancelable:true})); return "Paste dispatched; readback required"; })()'
     output.mkdir(parents=True, exist_ok=True)
     (output / 'body.html').write_text(content, encoding='utf-8')
     (output / 'paste.js').write_text(js, encoding='utf-8')
