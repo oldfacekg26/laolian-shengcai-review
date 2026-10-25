@@ -1,4 +1,4 @@
-# 生财有术复盘 Skill
+# 老脸生财有术复盘 Skill
 
 把录音、转写、PPT、现场照片整理成总结文章，在知识星球中插入正文图片、让用户多选标签、预览确认后发布并核对。
 
@@ -6,19 +6,19 @@
 
 ## 安装
 
-下载本仓库，放到你的助手支持的 Skill 目录，确保目录名为 `shengcai-review`，内部有 SKILL.md。Codex 用户可放在自己的 `~/.codex/skills/shengcai-review`；其他助手使用其官方 Skill 安装目录。
+下载本仓库，放到你的助手支持的 Skill 目录，确保目录名为 `laolian-shengcai-review`，内部有 SKILL.md。Codex 用户可放在自己的 `~/.codex/skills/laolian-shengcai-review`；其他助手使用其官方 Skill 安装目录。
 
 也可先克隆再让助手安装：
 
 ```sh
-git clone https://github.com/oldfacekg26/shengcai-review.git
+git clone https://github.com/oldfacekg26/shengcai-review.git laolian-shengcai-review
 ```
 
 本地脚本需要 **Python 3.10+**，只用标准库。网页操作优先使用助手自带浏览器，并在同一个浏览器里完成扫码、上传、保存和预览，避免登录态不共享导致重复扫码。备用方案是官方 [agent-browser](https://github.com/vercel-labs/agent-browser)，本次实测版本 0.38.1；按官方说明安装 Chrome 及浏览器工具。录音转写、PPT/PDF 提取使用助手已有工具，不捆绑转写模型。
 
 ## 直接这样说
 
-> 用 shengcai-review 整理这些活动资料，目标编辑页是我给你的知识星球网址。优先用 Codex 内置浏览器完成扫码和编辑；图片插入正文。先让我多选标签和预览，确认后才发布。
+> 用 laolian-shengcai-review 整理这些活动资料，目标编辑页是我给你的知识星球网址。优先用 Codex 内置浏览器完成扫码和编辑；图片插入正文。先让我多选标签和预览，确认后才发布。
 
 使用者需要提供目标编辑页和素材。不猜群 ID，不自动跨账号上传，不发布缺乏材料支撑的现场内容。
 

@@ -1,4 +1,4 @@
 interface:
-  display_name: "生财有术复盘"
+  display_name: "老脸生财有术复盘"
   short_description: "从录音课件照片整理复盘，正文插图、选标签、预览确认后发布"
-  default_prompt: "用 $shengcai-review 整理这次活动资料，生成图文复盘，后台填入生财编辑页并选择标签，先给我预览，确认后再发布。"
+  default_prompt: "用 $laolian-shengcai-review 整理这次活动资料，生成图文复盘，后台填入生财编辑页并选择标签，先给我预览，确认后再发布。"
