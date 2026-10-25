@@ -11,7 +11,7 @@
 也可先克隆再让助手安装：
 
 ```sh
-git clone https://github.com/oldfacekg26/shengcai-review.git laolian-shengcai-review
+git clone https://github.com/oldfacekg26/laolian-shengcai-review.git
 ```
 
 本地脚本需要 **Python 3.10+**，只用标准库。网页操作优先使用助手自带浏览器，并在同一个浏览器里完成扫码、上传、保存和预览，避免登录态不共享导致重复扫码。备用方案是官方 [agent-browser](https://github.com/vercel-labs/agent-browser)，本次实测版本 0.38.1；按官方说明安装 Chrome 及浏览器工具。录音转写、PPT/PDF 提取使用助手已有工具，不捆绑转写模型。
